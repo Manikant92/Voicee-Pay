@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.signals import pre_save
 from string import digits
 import random
 from transaction.constants import (
@@ -14,7 +15,9 @@ def generate_numbers(size=4):
 
 
 def generate_account_number():
-    return f"1{generate_numbers()[1:]}-" + "-".join([generate_numbers() for _ in range(3)])
+    return f"1{generate_numbers()[1:]}-" + "-".join(
+        [generate_numbers() for _ in range(3)]
+    )
 
 
 class PaymentRequest(models.Model):
@@ -89,3 +92,11 @@ class Transaction(models.Model):
 
     def __str__(self) -> str:
         return f"{self.transaction_id}"
+
+
+# generate new account number and override the default
+def pre_save_create_account_number(sender, instance, *args, **kwargs):
+    instance.account_number = generate_account_number()
+
+
+pre_save.connect(pre_save_create_account_number, sender=BankAccount)
