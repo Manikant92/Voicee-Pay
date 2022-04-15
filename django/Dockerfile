@@ -4,7 +4,8 @@ FROM python:3.7-buster
 RUN mkdir -p /opt/voicee_pay/django/
 COPY . /opt/voicee_pay/django/
 WORKDIR /opt/voicee_pay/django/
-RUN pip install -r requirements.txt
+RUN pip install --upgrade pip
+RUN pip install --no-cache-dir -r requirements.txt
 
 
 # ssh
