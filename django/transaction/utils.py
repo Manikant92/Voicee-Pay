@@ -17,8 +17,8 @@ def process_dialogflow_webhook(body):
     if intent_name == "payment.initiate-payment":
         return create_payment_request(parameters)
 
-    elif intent_name == "account.banalce_check":
-        return get_account_balance()
+    elif intent_name == "account.balance_check":
+        return get_account_balance(parameters)
 
 
 def create_payment_request(parameters):
@@ -52,7 +52,7 @@ def get_account_balance(parameters):
 
     try:
 
-        account_number = parameters["account_number"]
+        account_number = parameters["account-number"]
 
         logger.info(f"Trying to retrevie balance for account number - {account_number}")
 

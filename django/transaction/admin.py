@@ -21,8 +21,7 @@ class PaymentRequestAdmin(admin.ModelAdmin):
 
 @admin.register(BankAccount)
 class BankAccountAdmin(admin.ModelAdmin):
-    list_display = ("created_at", "account_number")
-    exclude = ("amount",)
+    list_display = ("account_number", "amount", "created_at")
 
 
 @admin.register(BankBranch)

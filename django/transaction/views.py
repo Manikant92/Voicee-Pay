@@ -13,21 +13,8 @@ def dialogflow_webhook(request):
         # this gives use the entire content in json
         body = json.loads(body_unicode)
 
-        process_dialogflow_webhook(body)
+        return process_dialogflow_webhook(body)
 
-        return JsonResponse(
-            {
-                "fulfillmentMessages": [
-                    {
-                        "text": {
-                            "text": [
-                                "Thanks submitting your payment request, we'll let you know once the request is processed"
-                            ]
-                        }
-                    }
-                ]
-            }
-        )
     else:
         return HttpResponse("URL is valid.<br>Send a post request to this URL")
 

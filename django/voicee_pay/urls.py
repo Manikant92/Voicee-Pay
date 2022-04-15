@@ -14,9 +14,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.http import HttpResponse
 from django.urls import path, include
 
 urlpatterns = [
+    path(
+        "",
+        lambda _: HttpResponse("Welcome to Voicee Pay!<br>-sandy_codes_py"),
+        name="index_page",
+    ),
     path("admin/", admin.site.urls),
     path(
         "transaction/",

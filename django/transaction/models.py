@@ -97,7 +97,8 @@ class Transaction(models.Model):
 
 # generate new account number and override the default
 def pre_save_create_account_number(sender, instance, *args, **kwargs):
-    instance.account_number = generate_account_number()
+    if not instance.account_number:
+        instance.account_number = generate_account_number()
 
 
 pre_save.connect(pre_save_create_account_number, sender=BankAccount)
