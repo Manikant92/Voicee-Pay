@@ -21,3 +21,8 @@ PAYMENT_REQUEST_STATUS_CHOICES = (
     ("pending", "pending"),
     ("Failed", "Failed"),
 )
+
+
+DIALOGFLOW_RESPONSE_TEMPLATE = {
+    "fulfillmentMessages": [{"text": {"text": ["Text response from webhook"]}}]
+}

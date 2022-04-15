@@ -1,0 +1,13 @@
+-- send this body in the post request to <server_name>/transaction/dialogflow_webhook
+
+{
+    "queryResult": {
+        "parameters": {
+            "name-of-receiver": "sandy",
+            "amount": 100
+        },
+        "intent": {
+            "displayName": "payment.initiate-payment"
+        }
+    }
+}

@@ -14,6 +14,7 @@ class PaymentRequestAdmin(admin.ModelAdmin):
         "created_at",
         "receiver_name",
         "sender_name",
+        "status",
         "request_initiated_type",
     )
 

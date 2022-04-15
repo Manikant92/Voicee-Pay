@@ -30,6 +30,7 @@ class PaymentRequest(models.Model):
     status = models.CharField(
         choices=PAYMENT_REQUEST_STATUS_CHOICES, max_length=40, default="pending"
     )
+    amount = models.DecimalField(decimal_places=2, max_digits=30, default=0.0)
 
 
 class BankAccount(models.Model):
