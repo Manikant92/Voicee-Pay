@@ -9,7 +9,6 @@ def check_balance_with_phone_number(phone_number):
     customer_obj: Customer = Customer.objects.filter(phone_number=phone_number).first()
 
     if customer_obj:
-
         return str(customer_obj.account_number.amount)
     else:
         logger.info(f"No account found for phone number - {phone_number}")
@@ -28,7 +27,7 @@ def transfer_money(user_input: str, phone_number: str):
             account_number=account_number
         ).first()
 
-        if sender and recepient:
+        if sender and recepient and sender.account_number.amount >= amount:
 
             Transaction.objects.create(
                 transaction_id=generate_numbers(15),
@@ -37,6 +36,10 @@ def transfer_money(user_input: str, phone_number: str):
                 amount=amount,
             )
             logger.info("transaction created successfull!")
+
+            recepient.account_number.amount += amount
+            recepient.account_number.save()
+
             logger.info(
                 f"Transfering Rs.{amount} from {sender.name} to {recepient.name}"
             )
