@@ -23,7 +23,7 @@ def process_dialogflow_webhook(body):
 
 def create_payment_request(parameters):
     temp_dialogflow_response = DIALOGFLOW_RESPONSE_TEMPLATE
-    response_message = "Thanks submitting your payment request, we'll let you know once the request is processed"
+    response_message = "Thanks for submitting your payment request, we'll let you know once the request is processed"
 
     try:
 
@@ -33,7 +33,7 @@ def create_payment_request(parameters):
             receiver_name=parameters["name-of-receiver"],
             amount=parameters["amount"],
         )
-    except Exception as e:
+    except:
         logger.exception(
             "The below error occurred while creating a new payment request object."
         )
@@ -68,7 +68,7 @@ def get_account_balance(parameters):
 
         logger.info("Successfully retreived the balance.")
 
-    except Exception as e:
+    except:
         logger.exception(
             "The below error occurred while retreiving the balance for the customer"
         )

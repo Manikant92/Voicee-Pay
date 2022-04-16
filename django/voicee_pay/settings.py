@@ -27,7 +27,7 @@ SECRET_KEY = "django-insecure-v)ef1fd-#0th3hi&m2x^uu1v_l5oj-l7ugx7z5f9g#=nqpah29
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True if gethostname() == "LAPTOP-0J9JATJ9" else False
 
-ALLOWED_HOSTS = ["sandy-voicee-pay-django.azurewebsites.net", "localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["sandy-voicee-pay-django.azurewebsites.net", "localhost", "127.0.0.1", "56dc-103-43-65-242.ngrok.io"]
 
 
 # Application definition

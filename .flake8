@@ -5,3 +5,5 @@ max-line-length = 100
 ignore=
     # line too long
     E501
+    # exception is not specified
+    E722

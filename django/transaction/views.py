@@ -1,6 +1,6 @@
 import json
 import logging
-from django.http.response import JsonResponse, HttpResponse
+from django.http.response import HttpResponse
 from transaction.utils import process_dialogflow_webhook
 
 logger = logging.getLogger("django")
