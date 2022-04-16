@@ -1,52 +1,47 @@
 from django.http import HttpResponse
 import logging
 
+from .utils import check_balance_with_phone_number
+from .constants import USSD_RESPONSES
+from .models import UssdSession
+
 logger = logging.getLogger("django")
 
 
 def af_webhook(request):
     if request.method == "POST":
         logger.info("Triggered Africa Talking Webhook!")
-        response = "END Response successful! \n need"
+        response = ""
         try:
 
             session_id = request.POST["sessionId"]
-        # user = g.current_user
-        # session = g.session
-        # user_response = g.user_response
-        # if isinstance(user, AnonymousUser):
-        #     # register user
-        #     menu = RegistrationMenu(session_id=session_id, session=session, phone_number=g.phone_number,
-        #                             user_response=user_response, user=user)
-        #     return menu.execute()
-        # level = session.get('level')
-        # if level < 2:
-        #     menu = LowerLevelMenu(session_id=session_id, session=session, phone_number=g.phone_number,
-        #                         user_response=user_response, user=user)
-        #     return menu.execute()
+            # get phone number without country code
+            user_mobile = request.POST["phoneNumber"].replace("+91", "")
+            user_input = request.POST["text"]
 
-        # if level >= 50:
-        #     menu = Deposit(session_id=session_id, session=session, phone_number=g.phone_number,
-        #                 user_response=user_response, user=user, level=level)
-        #     return menu.execute()
+            UssdSession.objects.create(
+                session_id=session_id, user_mobile=user_mobile, user_input=user_input
+            )
 
-        # if level >= 40:
-        #     menu = WithDrawal(session_id=session_id, session=session, phone_number=g.phone_number,
-        #                     user_response=user_response, user=user, level=level)
-        #     return menu.execute()
+            logger.info("Successfully recorded session details!")
 
-        # if level >= 10:
-        #     menu = Airtime(session_id=session_id, session=session, phone_number=g.phone_number, user_response=user_response,
-        #                 user=user, level=level)
-        #     return menu.execute()
+            # initial trigger from USSD service
+            if user_input == "":
+                response = USSD_RESPONSES["initial"]
+            elif user_input == "1":
+                response = USSD_RESPONSES[
+                    "balance_response"
+                ] + check_balance_with_phone_number(user_mobile)
+            elif user_input == "2":
+                pass
+            elif user_input == "3":
+                response = USSD_RESPONSES["end"]
 
-        # response = make_response("END nothing here", 200)
-        # response.headers['Content-Type'] = "text/plain"
         except:
             logger.exception("There is an error while responding!")
 
-        logger.info("sending response")
-        
+        logger.info(f"sending response - {response}")
+
         return HttpResponse(response, content_type="text/plain")
 
     else:
