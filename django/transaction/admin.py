@@ -34,7 +34,8 @@ class TransactionAdmin(admin.ModelAdmin):
     list_display = (
         "created_at",
         "transaction_id",
-        "account_number",
+        "sender_account",
+        "receiver_account",
         "amount",
         "status",
     )

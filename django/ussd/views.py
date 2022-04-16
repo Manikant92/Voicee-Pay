@@ -1,7 +1,6 @@
 from django.http import HttpResponse
 import logging
-
-from .utils import check_balance_with_phone_number
+from .utils import check_balance_with_phone_number, transfer_money
 from .constants import USSD_RESPONSES
 from .models import UssdSession
 
@@ -16,11 +15,11 @@ def af_webhook(request):
 
             session_id = request.POST["sessionId"]
             # get phone number without country code
-            user_mobile = request.POST["phoneNumber"].replace("+91", "")
+            user_phone = request.POST["phoneNumber"].replace("+91", "")
             user_input = request.POST["text"]
 
             UssdSession.objects.create(
-                session_id=session_id, user_mobile=user_mobile, user_input=user_input
+                session_id=session_id, user_phone=user_phone, user_input=user_input
             )
 
             logger.info("Successfully recorded session details!")
@@ -28,14 +27,22 @@ def af_webhook(request):
             # initial trigger from USSD service
             if user_input == "":
                 response = USSD_RESPONSES["initial"]
+
             elif user_input == "1":
                 response = USSD_RESPONSES[
                     "balance_response"
-                ] + check_balance_with_phone_number(user_mobile)
+                ] + check_balance_with_phone_number(user_phone)
+
             elif user_input == "2":
-                pass
+                response = USSD_RESPONSES["transfer_money"]
+
             elif user_input == "3":
                 response = USSD_RESPONSES["end"]
+
+            elif user_input.startswith("2*"):
+                # removed since we have this from the previous response
+                user_input = user_input.replace("2*", "")
+                response = transfer_money(user_input, user_phone)
 
         except:
             logger.exception("There is an error while responding!")

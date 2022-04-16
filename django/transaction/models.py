@@ -79,11 +79,18 @@ class Customer(models.Model):
 class Transaction(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     transaction_id = models.CharField(max_length=50)
-    receiver_name = models.CharField(max_length=50)
-    sender_name = models.CharField(max_length=50)
 
-    account_number = models.ForeignKey(
-        BankAccount, to_field="account_number", on_delete=models.CASCADE
+    sender_account = models.ForeignKey(
+        Customer,
+        on_delete=models.CASCADE,
+        related_name="sender_account",
+        default="",
+    )
+    receiver_account = models.ForeignKey(
+        Customer,
+        on_delete=models.CASCADE,
+        related_name="receiver_account",
+        default="",
     )
     amount = models.DecimalField(max_digits=20, decimal_places=2)
 
