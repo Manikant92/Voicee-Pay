@@ -1,0 +1,34 @@
+py manage.py runserver
+
+python manage.py makemigrations
+
+python manage.py migrate
+
+# you can have it running on any port which is not already occupied
+py manage.py runserver 0.0.0.0:8000
+
+
+-- run this after deleting the db to start over
+python manage.py migrate
+
+-- create a super user
+python manage.py createsuperuser
+
+-- use this to create the tables in transaction
+python manage.py makemigrations transaction
+
+-- create a new app
+python manage.py startapp app_name
+
+
+-- bank branch
+Citi Bangalore
+
+-- ifsc code
+CITI0000004
+
+-- address
+No. 5, M.G. Road, 
+Bengaluru - 560 001, 
+Phone Number: 080 - 67739333.
+

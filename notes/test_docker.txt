@@ -1,0 +1,15 @@
+-- build
+docker build -t sandyvoiceepayregistry.azurecr.io/voicee-pay-django:v1 .
+
+-- run
+docker run -d -p 8000:8000 sandyvoiceepayregistry.azurecr.io/voicee-pay-django:v1
+
+-- start the exisiting container with the container name
+docker start awesome_antonelli
+
+-- complete rebuild and push
+sh rebuild_and_push.sh 
+
+
+-- start docker for WSL 2
+sudo service docker start

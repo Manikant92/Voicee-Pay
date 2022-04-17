@@ -1,0 +1,5 @@
+docker login sandyvoiceepayregistry.azurecr.io
+
+docker tag voicee-pay-django:v1 sandyvoiceepayregistry.azurecr.io/voicee-pay-django:v1
+
+docker push sandyvoiceepayregistry.azurecr.io/voicee-pay-django:v1

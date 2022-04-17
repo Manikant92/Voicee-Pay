@@ -1,0 +1,59 @@
+
+
+
+-- transfer money to devika in one go
+देविका को 2030 रुपये का भुगतान करें
+
+
+
+-- sample raw API response from a successful transfer flow
+{
+  "responseId": "c6721ad9-1731-4654-9f25-c1b4c3713d53-21554733",
+  "queryResult": {
+    "queryText": "राजेश को 100 रुपये का भुगतान करें",
+    "parameters": {
+      "name-of-receiver": "राजेश",
+      "currency-name": "INR",
+      "amount": 100
+    },
+    "allRequiredParamsPresent": true,
+    "fulfillmentText": "आपके अनुरोध पर जल्द ही कार्रवाई की जाएगी। हमारे साथ बैंकिंग के लिए धन्यवाद। आपको किसी और चीज़ की ज़रुरत हो तो मुझे बताएं।",
+    "fulfillmentMessages": [
+      {
+        "text": {
+          "text": [
+            "Thanks for submitting your payment request, we'll let you know once the request is processed"
+          ]
+        }
+      }
+    ],
+    "outputContexts": [
+      {
+        "name": "projects/voicee-pay-hindi-mkhy/locations/global/agent/sessions/1a758652-83e1-55e6-5b21-4ee8e77df3e9/contexts/paymentinitiate-payment-followup",
+        "lifespanCount": 2,
+        "parameters": {
+          "name-of-receiver": "राजेश",
+          "currency-name": "INR",
+          "name-of-receiver.original": "राजेश",
+          "amount": 100,
+          "amount.original": "100",
+          "currency-name.original": "रुपये"
+        }
+      }
+    ],
+    "intent": {
+      "name": "projects/voicee-pay-hindi-mkhy/locations/global/agent/intents/7ba7094d-c9af-4908-8141-fa1921f92096",
+      "displayName": "payment.initiate-payment"
+    },
+    "intentDetectionConfidence": 1,
+    "diagnosticInfo": {
+      "webhook_latency_ms": 825,
+      "query_sentiment_analysis_error": "INVALID_ARGUMENT: The language hi is not supported for document_sentiment analysis"
+    },
+    "languageCode": "hi"
+  },
+  "webhookStatus": {
+    "message": "Webhook execution successful"
+  },
+  "agentId": "ec63e59f-a737-4667-97b3-5b52c967e3aa"
+}

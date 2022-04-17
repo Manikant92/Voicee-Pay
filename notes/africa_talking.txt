@@ -1,0 +1,26 @@
+
+-- Africa Talking Simulator - can be used anonymously
+
+https://developers.africastalking.com/simulator
+
+
+
+-- DEBUGGING 
+REQUEST BODY - b'phoneNumber=%2B919003939495&serviceCode=%2A384%2A23442%23&text=&sessionId=ATUid_7b3c0335ad13ff92eaa49e131c92abfd&networkCode=99999'
+
+request.content_type - ouput = 'application/x-www-form-urlencoded'
+
+for this we can directly access the values like below
+request.POST["phoneNumber]
+
+
+-- Test phone number
+
+-- Testing USSD Codes
+Code to test on
+
+*384*187209#
+
+
+-- Transfer some cash to Aishu 
+1080-1376-6276-8838,784.90
