@@ -23,4 +23,4 @@ Code to test on
 
 
 -- Transfer some cash to Aishu 
-1080-1376-6276-8838,784.90
+1080-1376-6276-8838,100

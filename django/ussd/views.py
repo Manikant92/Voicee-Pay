@@ -1,9 +1,8 @@
 from django.http import HttpResponse
 import logging
 
-from  transaction.models import Customer
-from .utils import check_balance_with_phone_number, transfer_money
-from .constants import USSD_RESPONSES
+from transaction.models import Customer
+from .utils import execute_action
 from .models import UssdSession
 
 logger = logging.getLogger("django")
@@ -12,7 +11,7 @@ logger = logging.getLogger("django")
 def af_webhook(request):
     if request.method == "POST":
         logger.info("Triggered Africa Talking Webhook!")
-        response = ""
+        response = "END ."
         try:
 
             session_id = request.POST["sessionId"]
@@ -26,29 +25,37 @@ def af_webhook(request):
 
             logger.info("Successfully recorded session details!")
 
-            customer_obj: Customer = Customer.objects.filter(phone_number=user_phone).first()
+            customer_obj: Customer = Customer.objects.filter(
+                phone_number=user_phone
+            ).first()
 
-            # initial trigger from USSD service
-            if user_input == "":
-                if customer_obj:
-                    response = USSD_RESPONSES["initial"]
-                else:
-                    response = USSD_RESPONSES["no_account_error"]
-            elif user_input == "1":
-                response = USSD_RESPONSES[
-                    "balance_response"
-                ] + check_balance_with_phone_number(user_phone)
+            # method_name = get_method_name_from_user_input(user_input)
+            # callable_action_method: Callable = globals()[method_name]
+            # logger.info(f"Executing - {callable_action_method.__name__}")
+            response = execute_action(user_input, customer_obj)
 
-            elif user_input == "2":
-                response = USSD_RESPONSES["transfer_money"]
+            # # initial trigger from USSD service
+            # if user_input == "":
+            #     if customer_obj:
+            #         response = USSD_RESPONSES["select_language"]
+            #     else:
+            #         response = USSD_RESPONSES["no_account_error"]
+            # TODO: create a method which takes in user_input and returns the method to call and cleaned user_input
+            # elif user_input == "1":
+            #     response = USSD_RESPONSES[
+            #         "balance_response"
+            #     ] + check_balance_with_phone_number(user_phone)
 
-            elif user_input == "3":
-                response = USSD_RESPONSES["end"]
+            # elif user_input == "2":
+            #     response = USSD_RESPONSES["transfer_money"]
 
-            elif user_input.startswith("2*"):
-                # removed since we have this from the previous response
-                user_input = user_input.replace("2*", "")
-                response = transfer_money(user_input, user_phone)
+            # elif user_input == "3":
+            #     response = USSD_RESPONSES["end"]
+
+            # elif user_input.startswith("2*"):
+            #     # removed since we have this from the previous response
+            #     user_input = user_input.replace("2*", "")
+            #     response = transfer_money(user_input, user_phone)
 
         except:
             logger.exception("There is an error while responding!")
