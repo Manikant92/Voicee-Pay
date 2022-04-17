@@ -1,5 +1,7 @@
 from django.http import HttpResponse
 import logging
+
+from  transaction.models import Customer
 from .utils import check_balance_with_phone_number, transfer_money
 from .constants import USSD_RESPONSES
 from .models import UssdSession
@@ -24,10 +26,14 @@ def af_webhook(request):
 
             logger.info("Successfully recorded session details!")
 
+            customer_obj: Customer = Customer.objects.filter(phone_number=user_phone).first()
+
             # initial trigger from USSD service
             if user_input == "":
-                response = USSD_RESPONSES["initial"]
-
+                if customer_obj:
+                    response = USSD_RESPONSES["initial"]
+                else:
+                    response = USSD_RESPONSES["no_account_error"]
             elif user_input == "1":
                 response = USSD_RESPONSES[
                     "balance_response"
