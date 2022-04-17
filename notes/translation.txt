@@ -6,9 +6,10 @@ Transfer Money
 Exit
 Balance
 Thanks for banking with us. Have a great day! - Citi bank
-Enter the account number and amount seperated with comma ','
-You don't have a sufficient fund to make this tranfer.
-You don't have an account yet.
-Successfully transferred Rs.<amount_to_send> to <recepient.name>
+Enter the account number and amount separated with comma ','
+Failed to transfer Rs.<amount_to_send> to <recepient.name>!
+Successfully transferred Rs.amount_to_send to recepient.name
 Failed to transfer Rs.<amount_to_send> to <recepient.name>
+You don't have an account yet.
 Insufficient fund to transfer Rs.<amount_to_send> to recepient.name. \nYou need Rs.<unsufficient_fund> more to make this transaction.
+We can't process requests now.

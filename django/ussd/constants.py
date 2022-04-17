@@ -5,8 +5,9 @@ USSD_RESPONSES = {
     2.മലയാളം
     3.ಕನ್ನಡ
     4.हिंदी
-    5.मराठी
-    6.English""",
+    5.বাংলা
+    6.English
+    7.తెలుగు""",
     "hi": {
         "initial": """CON 1.बैंक बैलेंस चेक करें
         2.धन हस्तांतरण
@@ -28,7 +29,7 @@ USSD_RESPONSES = {
         "ussd_connection_terminate": "END Thanks for banking with us.\nHave a great day!\n - Citi bank",
         "transfer_money_prompt": "CON Enter the account number and amount seperated with comma ','",
         "transfer_success": "END Successfully transferred Rs.amount_to_send to recepient.name",
-        "transfer_failed": "END Failed to transfer Rs.<amount_to_send> to <recepient.name>!",
+        "transfer_failed": "END Failed to transfer Rs.amount_to_send to recepient.name!",
         "no_account_error": "END You don't have an account yet.",
         "unsufficient_fund_error": "END Insufficient fund to transfer Rs.amount_to_send to recepient.name. \nYou need Rs.unsufficient_fund more to make this transaction.",
         "default_error": "END We can't process request now.",
@@ -41,12 +42,33 @@ LANGUAGE_CODE_MAPPING = {
     "mal": "2",
     "ka": "3",
     "hi": "4",
-    "mar": "5",
+    "ben": "5",
     "en": "6",
+    "te": "7"
 }
 
 CODE_FUNCTION_MAPPING = OrderedDict(
     {
+        "7*3": {
+            "method_name": "ussd_connection_terminate",
+            "args": ["te"],
+        },
+        "7*2*": {
+            "method_name": "transfer_money",
+            "args": ["te"],
+        },
+        "7*2": {
+            "method_name": "transfer_money_prompt",
+            "args": ["te"],
+        },
+        "7*1": {
+            "method_name": "check_balance_with_phone_number",
+            "args": ["te"],
+        },
+        "7": {
+            "method_name": "display_services",
+            "args": ["te"],
+        },
         "6*3": {
             "method_name": "ussd_connection_terminate",
             "args": ["en"],
@@ -69,10 +91,14 @@ CODE_FUNCTION_MAPPING = OrderedDict(
         },
         "5*3": {
             "method_name": "ussd_connection_terminate",
-            "args": ["hi"],
+            "args": ["mar"],
+        },
+        "5*2*": {
+            "method_name": "transfer_money",
+            "args": ["mar"],
         },
         "5*2": {
-            "method_name": "transfer_money",
+            "method_name": "transfer_money_prompt",
             "args": ["hi"],
         },
         "5*1": {
@@ -81,14 +107,18 @@ CODE_FUNCTION_MAPPING = OrderedDict(
         },
         "5": {
             "method_name": "display_services",
-            "args": ["hi"],
+            "args": ["mar"],
         },
         "4*3": {
             "method_name": "ussd_connection_terminate",
             "args": ["hi"],
         },
-        "4*2": {
+        "4*2*": {
             "method_name": "transfer_money",
+            "args": ["hi"],
+        },
+        "4*2": {
+            "method_name": "transfer_money_prompt",
             "args": ["hi"],
         },
         "4*1": {
@@ -101,26 +131,34 @@ CODE_FUNCTION_MAPPING = OrderedDict(
         },
         "3*3": {
             "method_name": "ussd_connection_terminate",
-            "args": ["ta"],
+            "args": ["ka"],
+        },
+        "3*2*": {
+            "method_name": "transfer_money",
+            "args": ["ka"],
         },
         "3*2": {
-            "method_name": "transfer_money",
-            "args": ["ta"],
+            "method_name": "transfer_money_prompt",
+            "args": ["ka"],
         },
         "3*1": {
             "method_name": "check_balance_with_phone_number",
-            "args": ["hi"],
+            "args": ["ka"],
         },
         "3": {
             "method_name": "display_services",
-            "args": ["ta"],
+            "args": ["ka"],
         },
         "2*3": {
             "method_name": "ussd_connection_terminate",
             "args": ["mal"],
         },
-        "2*2": {
+        "2*2*": {
             "method_name": "transfer_money",
+            "args": ["mal"],
+        },
+        "2*2": {
+            "method_name": "transfer_money_prompt",
             "args": ["mal"],
         },
         "2*1": {
@@ -135,8 +173,12 @@ CODE_FUNCTION_MAPPING = OrderedDict(
             "method_name": "ussd_connection_terminate",
             "args": ["ta"],
         },
-        "1*2": {
+        "1*2*": {
             "method_name": "transfer_money",
+            "args": ["ta"],
+        },
+        "1*2": {
+            "method_name": "transfer_money_prompt",
             "args": ["ta"],
         },
         "1": {
@@ -146,3 +188,4 @@ CODE_FUNCTION_MAPPING = OrderedDict(
         "": {"": "langauge_select"},
     }
 )
+

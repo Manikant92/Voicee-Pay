@@ -31,12 +31,13 @@ def check_balance_with_phone_number(
 
 def transfer_money(user_input: str, sender: Customer, language_code: str = "en"):
 
+    # get the language code from string
     language_code_str = LANGUAGE_CODE_MAPPING.get(language_code)
     user_input = user_input.replace(f"{language_code_str}*2*", "")
+
     account_number, amount_to_send = user_input.split(",")
     amount_to_send = Decimal(amount_to_send)
     response = ""
-
     try:
         recepient: Customer = Customer.objects.filter(
             account_number=account_number
@@ -65,7 +66,7 @@ def transfer_money(user_input: str, sender: Customer, language_code: str = "en")
             amount_to_send = str(amount_to_send)
 
             logger.info(
-                f"Transfering Rs.{amount_to_send} from {sender.name} to {recepient.name}"
+                f"language - {language_code} - Transfering Rs.{amount_to_send} from {sender.name} to {recepient.name}"
             )
 
             # response = f"END Successfully transferred Rs.{amount_to_send} to {recepient.name}"
@@ -136,6 +137,7 @@ def execute_action(user_input: str, customer_obj: Customer):
 
                 method_name = content.get("method_name", False)
 
+                # get the callable method from the current file
                 callable_action_method: Callable = globals()[method_name]
                 logger.info(f"Executing - {callable_action_method.__name__}")
 
