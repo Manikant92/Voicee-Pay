@@ -31,8 +31,22 @@ USSD_RESPONSES = {
         "transfer_success": "END Successfully transferred Rs.amount_to_send to recepient.name",
         "transfer_failed": "END Failed to transfer Rs.amount_to_send to recepient.name!",
         "no_account_error": "END You don't have an account yet.",
-        "unsufficient_fund_error": "END Insufficient fund to transfer Rs.amount_to_send to recepient.name. \nYou need Rs.unsufficient_fund more to make this transaction.",
+        "unsufficient_fund_error": "END Insufficient fund to transfer Rs.amount_to_send to recepient.name. \nYou need Rs.insufficient_fund more to make this transaction.",
         "default_error": "END We can't process request now.",
+    },
+    "ben": {
+        "initial": """CON সিটি ব্যাংকে স্বাগতম
+        1.ব্যাঙ্ক ব্যালেন্স চেক করুন
+        2.অর্থ স্থানান্তর করুন
+        3.প্রস্থান করুন/প্রস্থান""",
+        "balance_response": "END ব্যালেন্স : Rs.",
+        "ussd_connection_terminate": "END আমাদের সাথে ব্যাংকিং করার জন্য ধন্যবাদ| আপনার দিন শুভ হোক! \n- সিটি ব্যাংক",
+        "transfer_money_prompt": "CON কমা দিয়ে(',') আলাদা করে অ্যাকাউন্ট নম্বর এবং অর্থের পরিমাণ লিখুন। ",
+        "transfer_success": "END সফলভাবে Rs.amount_to_send recepient.name -এ স্থানান্তর করা হয়েছে।",
+        "transfer_failed": "END recepient.name -এ Rs.amount_to_send স্থানান্তর করতে ব্যর্থ হয়েছে!!",
+        "no_account_error": "ENDআপনার এখনও একটি অ্যাকাউন্ট নেই.",
+        "unsufficient_fund_error": "END recipient.name-এ Rs.amount_to_send স্থানান্তর করার জন্য অপর্যাপ্ত অর্থ রয়েছে।. \nএই লেনদেন করার জন্য আপনার আরও Rs.insufficient_fund প্রয়োজন৷.",
+        "default_error": "END আমরা এখন অনুরোধটি প্রসেস করতে পারছি না|.",
     },
     "no_account_error": "END You don't have an account yet.",
 }
@@ -44,9 +58,10 @@ LANGUAGE_CODE_MAPPING = {
     "hi": "4",
     "ben": "5",
     "en": "6",
-    "te": "7"
+    "te": "7",
 }
 
+# OrderDict is to make sure we match with the right options
 CODE_FUNCTION_MAPPING = OrderedDict(
     {
         "7*3": {
@@ -91,23 +106,23 @@ CODE_FUNCTION_MAPPING = OrderedDict(
         },
         "5*3": {
             "method_name": "ussd_connection_terminate",
-            "args": ["mar"],
+            "args": ["ben"],
         },
         "5*2*": {
             "method_name": "transfer_money",
-            "args": ["mar"],
+            "args": ["ben"],
         },
         "5*2": {
             "method_name": "transfer_money_prompt",
-            "args": ["hi"],
+            "args": ["ben"],
         },
         "5*1": {
             "method_name": "check_balance_with_phone_number",
-            "args": ["hi"],
+            "args": ["ben"],
         },
         "5": {
             "method_name": "display_services",
-            "args": ["mar"],
+            "args": ["ben"],
         },
         "4*3": {
             "method_name": "ussd_connection_terminate",
@@ -188,4 +203,3 @@ CODE_FUNCTION_MAPPING = OrderedDict(
         "": {"": "langauge_select"},
     }
 )
-

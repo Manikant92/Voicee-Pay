@@ -3,6 +3,9 @@
 
 https://developers.africastalking.com/simulator
 
+-- actual website
+https://sandy-voicee-pay-django.azurewebsites.net
+webhook - https://sandy-voicee-pay-django.azurewebsites.net/ussd/webhook
 
 
 -- DEBUGGING 
@@ -14,7 +17,9 @@ for this we can directly access the values like below
 request.POST["phoneNumber]
 
 
--- Test phone number
+-- Testing self
+test account 2
+9834473278
 
 -- Testing USSD Codes
 Code to test on
@@ -24,3 +29,22 @@ Code to test on
 
 -- Transfer some cash to Aishu 
 1080-1376-6276-8838,100
+
+
+Got to this URL
+https://developers.africastalking.com/simulator
+
+Enter the below phone number
+9834473278
+
+Click on call icon
+
+Enter this code
+*384*187209#
+
+Hit call
+
+Enter the code
+
+Wait for the prompt to transfer money and enter the below
+1306-2609-5676-7053,100.78

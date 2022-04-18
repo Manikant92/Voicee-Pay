@@ -88,7 +88,7 @@ def transfer_money(user_input: str, sender: Customer, language_code: str = "en")
                     "unsufficient_fund_error"
                 )
                 response = response.replace("amount_to_send", amount_to_send).replace(
-                    "unsufficient_fund", str(amount_to_send - sender_balance)
+                    "insufficient_fund", str(amount_to_send - sender_balance)
                 )
 
     except:
