@@ -219,11 +219,11 @@ CODE_FUNCTION_MAPPING = OrderedDict(
             "args": ["ta"],
         },
         "1*2*": {
-            "method_name": "transfer_money",
+            "method_name": "transfer_money_prompt",
             "args": ["ta"],
         },
-        "1*2": {
-            "method_name": "transfer_money_prompt",
+        "1*1": {
+            "method_name": "check_balance_with_phone_number",
             "args": ["ta"],
         },
         "1": {

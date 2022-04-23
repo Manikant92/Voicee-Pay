@@ -1,6 +1,6 @@
 from django.http import JsonResponse
 from transaction.constants import DIALOGFLOW_RESPONSE_TEMPLATE
-from transaction.models import BankAccount, PaymentRequest
+from transaction.models import BankAccount, Feedback, PaymentRequest
 import logging
 
 logger = logging.getLogger("django")
@@ -19,6 +19,9 @@ def process_dialogflow_webhook(body):
 
     elif intent_name == "account.balance_check":
         return get_account_balance(parameters)
+
+    elif intent_name == "Feedback - Close Intent":
+        return record_feedback(parameters)
 
 
 def create_payment_request(parameters):
@@ -73,6 +76,26 @@ def get_account_balance(parameters):
             "The below error occurred while retreiving the balance for the customer"
         )
         response_message = "There was an error while retreving your account balance. Please try again later"
+
+    temp_dialogflow_response["fulfillmentMessages"][0]["text"]["text"] = [
+        response_message
+    ]
+
+    return JsonResponse(temp_dialogflow_response)
+
+
+def record_feedback(parameters):
+
+    temp_dialogflow_response = DIALOGFLOW_RESPONSE_TEMPLATE
+    received_feedback = parameters["feedback"]
+    logger.info("Recoding feedback triggered via webhook")
+    # setting default message if the condition is not met
+    response_message = "आपकी प्रतिक्रिया दर्ज नहीं की गई थी"
+
+    if received_feedback:
+        Feedback.objects.create(feedback=received_feedback)
+        response_message = "आपकी प्रतिक्रिया के लिए धन्यवाद। आपका दिन अच्छा रहे!"
+        logger.info("Recorded feedaback from the user.")
 
     temp_dialogflow_response["fulfillmentMessages"][0]["text"]["text"] = [
         response_message

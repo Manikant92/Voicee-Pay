@@ -1,6 +1,13 @@
 from django.contrib import admin
 
-from .models import Customer, BankAccount, PaymentRequest, BankBranch, Transaction
+from .models import (
+    Customer,
+    BankAccount,
+    Feedback,
+    PaymentRequest,
+    BankBranch,
+    Transaction,
+)
 
 
 @admin.register(Customer)
@@ -39,3 +46,8 @@ class TransactionAdmin(admin.ModelAdmin):
         "amount",
         "status",
     )
+
+
+@admin.register(Feedback)
+class FeedbackAdmin(admin.ModelAdmin):
+    list_display = ("created_at", "feedback")

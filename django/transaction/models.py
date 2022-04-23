@@ -102,6 +102,15 @@ class Transaction(models.Model):
         return f"{self.transaction_id}"
 
 
+class Feedback(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    feedback = models.CharField(max_length=50)
+
+    def __str__(self) -> str:
+        return f"{self.feedback}"
+
+
 # generate new account number and override the default
 def pre_save_create_account_number(sender, instance, *args, **kwargs):
     if not instance.account_number:
