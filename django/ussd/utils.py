@@ -39,25 +39,25 @@ def transfer_money(user_input: str, sender: Customer, language_code: str = "en")
     amount_to_send = Decimal(amount_to_send)
     response = ""
     try:
-        recepient: Customer = Customer.objects.filter(
+        recipient: Customer = Customer.objects.filter(
             account_number=account_number
         ).first()
 
         sender_balance = sender.account_number.amount
 
-        if sender and recepient and sender_balance >= amount_to_send:
+        if sender and recipient and sender_balance >= amount_to_send:
 
             Transaction.objects.create(
                 transaction_id=generate_numbers(15),
                 sender_account=sender,
-                receiver_account=recepient,
+                receiver_account=recipient,
                 amount=amount_to_send,
             )
             logger.info("transaction created successfull!")
 
-            # add money to the reepient
-            recepient.account_number.amount += amount_to_send
-            recepient.account_number.save()
+            # add money to the recipient
+            recipient.account_number.amount += amount_to_send
+            recipient.account_number.save()
 
             # deduct money from the sender
             sender.account_number.amount -= amount_to_send
@@ -66,26 +66,26 @@ def transfer_money(user_input: str, sender: Customer, language_code: str = "en")
             amount_to_send = str(amount_to_send)
 
             logger.info(
-                f"language - {language_code} - Transfering Rs.{amount_to_send} from {sender.name} to {recepient.name}"
+                f"language - {language_code} - Transfering Rs.{amount_to_send} from {sender.name} to {recipient.name}"
             )
 
-            # response = f"END Successfully transferred Rs.{amount_to_send} to {recepient.name}"
+            # response = f"END Successfully transferred Rs.{amount_to_send} to {recipient.name}"
             response = USSD_RESPONSES.get(language_code).get("transfer_success")
             response = response.replace("amount_to_send", amount_to_send).replace(
-                "recepient.name", recepient.name
+                "recipient.name", recipient.name
             )
 
         else:
-            # response = f"END Failed to transfer Rs.{amount_to_send} to {recepient.name}"
+            # response = f"END Failed to transfer Rs.{amount_to_send} to {recipient.name}"
             response = USSD_RESPONSES.get(language_code).get("transfer_failed")
             response = response.replace("amount_to_send", amount_to_send).replace(
-                "recepient.name", recepient.name
+                "recipient.name", recipient.name
             )
 
             if sender_balance < amount_to_send:
-                # response = f"END Insufficient fund to transfer Rs.{amount_to_send} to {recepient.name}. \nYou need Rs.{amount_to_send - sender_balance} more to make this transaction."
+                # response = f"END Insufficient fund to transfer Rs.{amount_to_send} to {recipient.name}. \nYou need Rs.{amount_to_send - sender_balance} more to make this transaction."
                 response = USSD_RESPONSES.get(language_code).get(
-                    "unsufficient_fund_error"
+                    "insufficient_fund_error"
                 )
                 response = response.replace("amount_to_send", amount_to_send).replace(
                     "insufficient_fund", str(amount_to_send - sender_balance)
@@ -93,10 +93,10 @@ def transfer_money(user_input: str, sender: Customer, language_code: str = "en")
 
     except:
         logger.exception("There was an exception while transfering the amount")
-        # response = f"END Failed to transfer Rs.{amount_to_send} to {recepient.name}"
+        # response = f"END Failed to transfer Rs.{amount_to_send} to {recipient.name}"
         response = USSD_RESPONSES.get(language_code).get("transfer_failed")
         response = response.replace("amount_to_send", amount_to_send).replace(
-            "recepient.name", recepient.name
+            "recipient.name", recipient.name
         )
 
     return response, language_code

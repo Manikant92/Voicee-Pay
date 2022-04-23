@@ -1,6 +1,7 @@
 {
     "cSpell.words": [
         "ifse",
+        "USSD",
         "voicee"
     ],
     "python.formatting.provider": "black"

@@ -54,7 +54,7 @@ def get_account_balance(parameters):
 
         account_number = parameters["account-number"]
 
-        logger.info(f"Trying to retrevie balance for account number - {account_number}")
+        logger.info(f"Trying to retrieve balance for account number - {account_number}")
 
         account_obj: BankAccount = BankAccount.objects.filter(
             account_number=account_number
@@ -66,7 +66,7 @@ def get_account_balance(parameters):
             response_message
         ]
 
-        logger.info("Successfully retreived the balance.")
+        logger.info("Successfully retrieved the balance.")
 
     except:
         logger.exception(
