@@ -1,4 +1,18 @@
+-- toll-free numbers to call
++1 833-207-1335 - English
++1 833-208-4225 - Hindi
 
+
+-- phrases to check dialog flow help bot
+help - this will trigger the general help that gives the list of things that it can do.
+Why was my cheque payment not credited to the card account?
+How do I block my Citi Card and re-issue a new one?
+How do I update Form 15G?
+How do I update Form 15F?
+What online services does Citibank provide?
+How do I update PAN number?
+What channels can I use to report a transaction that I have a dispute on?
+How to set your User ID, Password and PIN Online?
 
 
 -- transfer money to devika in one go

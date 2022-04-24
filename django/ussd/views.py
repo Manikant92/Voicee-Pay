@@ -11,7 +11,7 @@ logger = logging.getLogger("django")
 def af_webhook(request):
     if request.method == "POST":
         logger.info("Triggered Africa Talking Webhook!")
-        response = "END ."
+        response = "END Invalid Code."
         try:
 
             session_id = request.POST["sessionId"]
@@ -29,33 +29,8 @@ def af_webhook(request):
                 phone_number=user_phone
             ).first()
 
-            # method_name = get_method_name_from_user_input(user_input)
-            # callable_action_method: Callable = globals()[method_name]
-            # logger.info(f"Executing - {callable_action_method.__name__}")
+            # this is the place where the code is mapped to an action
             response = execute_action(user_input, customer_obj)
-
-            # # initial trigger from USSD service
-            # if user_input == "":
-            #     if customer_obj:
-            #         response = USSD_RESPONSES["select_language"]
-            #     else:
-            #         response = USSD_RESPONSES["no_account_error"]
-            # TODO: create a method which takes in user_input and returns the method to call and cleaned user_input
-            # elif user_input == "1":
-            #     response = USSD_RESPONSES[
-            #         "balance_response"
-            #     ] + check_balance_with_phone_number(user_phone)
-
-            # elif user_input == "2":
-            #     response = USSD_RESPONSES["transfer_money"]
-
-            # elif user_input == "3":
-            #     response = USSD_RESPONSES["end"]
-
-            # elif user_input.startswith("2*"):
-            #     # removed since we have this from the previous response
-            #     user_input = user_input.replace("2*", "")
-            #     response = transfer_money(user_input, user_phone)
 
         except:
             logger.exception("There is an error while responding!")
