@@ -1,6 +1,6 @@
 const data =  {
   labels: ["M", "T", "W", "T", "F", "S", "S"],
-  datasets: { label: "Transactions", data: [50, 20, 10, 22, 50, 10, 40] },
+  datasets: { label: "Transactions", data: [0, 0, 0, 0, 0, 0, 0] },
 };
 
 

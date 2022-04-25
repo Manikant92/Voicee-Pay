@@ -22,27 +22,25 @@ import PaidIcon from "@mui/icons-material/Paid";
 import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
 import PaymentsIcon from "@mui/icons-material/Payments";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
-
-import { useQuery } from "@apollo/client";
-import { GET_TOTAL_TRANSACTIONS } from "components/GraphQL";
+import { UpdateTransaction, UpdateUssdSession } from "./data/updateData";
+import { GetTotalCustomers } from "./data/utils";
 
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
-
-  const { error, loading, data } = useQuery(GET_TOTAL_TRANSACTIONS, {
-    fetchPolicy: "network-only",
-  });
-  const [totalTransaction, setTotalTransaction] = useState(null);
+  const [totalTransaction, setTotalTransaction] = useState(0);
   const [totalTransactionList, setTotalTransactionList] = useState(null);
+  const [totalUssdSessions, setTotalUssdSession] = useState(0);
+  const [totalPayment, setTotalPayment] = useState("$0");
+  const [totalUssdSsssionList, setTotalUssdSessionList] = useState(null);
+  const [totalCustomers, setTotalCustomers] = useState(0);
 
-  useEffect(() => {
-    if (data) {
-      console.log("Received transactions - setting the values");
-      setTotalTransactionList(data.transactions);
-      setTotalTransaction(data.transactions.length);
-    
-    }
-  }, [data]);
+  UpdateTransaction(
+    setTotalTransaction,
+    setTotalTransactionList,
+    setTotalPayment
+  );
+  UpdateUssdSession(setTotalUssdSession, setTotalUssdSessionList);
+  GetTotalCustomers(setTotalCustomers);
 
   return (
     <DashboardLayout>
@@ -64,7 +62,7 @@ function Dashboard() {
               <ComplexStatisticsCard
                 icon={<PhoneIphoneIcon />}
                 title="USSD Session"
-                count="108"
+                count={totalUssdSessions}
               />
             </MDBox>
           </Grid>
@@ -74,7 +72,7 @@ function Dashboard() {
                 color="success"
                 icon={<PaymentsIcon />}
                 title="Total Payments"
-                count="$34k"
+                count={totalPayment}
               />
             </MDBox>
           </Grid>
@@ -84,7 +82,7 @@ function Dashboard() {
                 color="primary"
                 icon={<PeopleAltIcon />}
                 title="Customers"
-                count="7"
+                count={totalCustomers}
               />
             </MDBox>
           </Grid>
