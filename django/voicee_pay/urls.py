@@ -2,6 +2,9 @@
 from django.contrib import admin
 from django.http import HttpResponse
 from django.urls import path, include
+from django.views.decorators.csrf import csrf_exempt
+from graph.views import PrivateGraphQLView
+from graph.schema import schema
 
 urlpatterns = [
     path(
@@ -18,4 +21,5 @@ urlpatterns = [
         "ussd/",
         include(("ussd.urls", "ussd"), namespace="ussd"),
     ),
+    path("api/q/", csrf_exempt(PrivateGraphQLView.as_view(graphiql=True, schema=schema))),
 ]

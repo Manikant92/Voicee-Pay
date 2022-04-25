@@ -1,0 +1,9 @@
+# should start with the keyword query followed by the query name (this could be anything that helps in logging and debugging)
+# then the model name inside are the fields that we need.
+
+query getTransactions {
+  transactions {
+    createdAt
+    amount
+  }
+}
