@@ -14,7 +14,7 @@ function Footer() {
       justifyContent="space-between"
       alignItems="center"
       px={1.5}
-      pt={27}
+      pt={33}
     >
       <MDBox
         display="flex"

@@ -6,12 +6,32 @@ import reportWebVitals from "reportWebVitals";
 
 import { MaterialUIControllerProvider } from "context";
 
+// api components
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  createHttpLink,
+} from "@apollo/client";
+
+const httpLink = createHttpLink({
+  // uri: "https://sandy-voicee-pay-django.azurewebsites.net/api/q",
+  uri: "http://127.0.0.1:8000/api/q/",
+});
+
+const client = new ApolloClient({
+  link: httpLink,
+  cache: new InMemoryCache(),
+});
+
 ReactDOM.render(
-  <BrowserRouter>
-    <MaterialUIControllerProvider>
-      <App />
-    </MaterialUIControllerProvider>
-  </BrowserRouter>,
+  <ApolloProvider client={client}>
+    <BrowserRouter>
+      <MaterialUIControllerProvider>
+        <App />
+      </MaterialUIControllerProvider>
+    </BrowserRouter>
+  </ApolloProvider>,
   document.getElementById("root")
 );
 

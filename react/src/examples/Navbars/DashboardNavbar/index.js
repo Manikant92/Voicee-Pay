@@ -21,6 +21,7 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import MenuIcon from "@mui/icons-material/Menu";
 import UpdateIcon from "@mui/icons-material/Update";
+import HomeIcon from "@mui/icons-material/Home";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -47,7 +48,6 @@ import {
   setOpenConfigurator,
 } from "context";
 import StandaloneToggleButton from "components/ToggleButton";
-import { Icon } from "@mui/material";
 
 function DashboardNavbar({ absolute, light, isMini }) {
   const [navbarType, setNavbarType] = useState();
@@ -153,7 +153,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
           sx={(theme) => navbarRow(theme, { isMini })}
         >
           <Breadcrumbs
-            icon="home"
+            icon={<HomeIcon />}
             title={route[route.length - 1]}
             route={route}
             light={light}
@@ -168,10 +168,10 @@ function DashboardNavbar({ absolute, light, isMini }) {
             >
               Update Data
             </Button>
-            <IconButton >
+            <IconButton>
               <StandaloneToggleButton />
             </IconButton>
-            <MDBox color={light ? "white" : "inherit"} >
+            <MDBox color={light ? "white" : "inherit"}>
               <Link to="/authentication/sign-in/basic">
                 <IconButton sx={navbarIconButton} size="small" disableRipple>
                   <AccountCircleIcon sx={iconsStyle} />

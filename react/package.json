@@ -5,6 +5,7 @@
   "author": "Santhosh (aka Sandy)",
   "description": "A  React dashboard to monitor the transaction activities.",
   "dependencies": {
+    "@apollo/client": "^3.5.10",
     "@emotion/cache": "11.7.1",
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
@@ -16,6 +17,7 @@
     "@testing-library/user-event": "13.5.0",
     "chart.js": "3.4.1",
     "chroma-js": "2.4.2",
+    "graphql": "^16.3.0",
     "prop-types": "15.8.1",
     "react": "17.0.2",
     "react-chartjs-2": "3.0.4",

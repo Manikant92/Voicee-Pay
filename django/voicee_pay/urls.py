@@ -21,5 +21,5 @@ urlpatterns = [
         "ussd/",
         include(("ussd.urls", "ussd"), namespace="ussd"),
     ),
-    path("api/q/", csrf_exempt(PrivateGraphQLView.as_view(graphiql=True, schema=schema))),
+    path("api/q/", csrf_exempt(PrivateGraphQLView.as_view(graphiql=False, schema=schema))),
 ]

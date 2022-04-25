@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 // @mui material components
 import Grid from "@mui/material/Grid";
 
@@ -22,8 +23,26 @@ import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
 import PaymentsIcon from "@mui/icons-material/Payments";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 
+import { useQuery } from "@apollo/client";
+import { GET_TOTAL_TRANSACTIONS } from "components/GraphQL";
+
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
+
+  const { error, loading, data } = useQuery(GET_TOTAL_TRANSACTIONS, {
+    fetchPolicy: "network-only",
+  });
+  const [totalTransaction, setTotalTransaction] = useState(null);
+  const [totalTransactionList, setTotalTransactionList] = useState(null);
+
+  useEffect(() => {
+    if (data) {
+      console.log("Received transactions - setting the values");
+      setTotalTransactionList(data.transactions);
+      setTotalTransaction(data.transactions.length);
+    
+    }
+  }, [data]);
 
   return (
     <DashboardLayout>
@@ -36,12 +55,7 @@ function Dashboard() {
                 color="dark"
                 icon={<PaidIcon />}
                 title="Transactions"
-                count={281}
-                percentage={{
-                  color: "success",
-                  amount: "+55%",
-                  label: "than lask week",
-                }}
+                count={totalTransaction}
               />
             </MDBox>
           </Grid>
@@ -50,12 +64,7 @@ function Dashboard() {
               <ComplexStatisticsCard
                 icon={<PhoneIphoneIcon />}
                 title="USSD Session"
-                count="2,300"
-                percentage={{
-                  color: "success",
-                  amount: "+3%",
-                  label: "than last month",
-                }}
+                count="108"
               />
             </MDBox>
           </Grid>
@@ -65,12 +74,7 @@ function Dashboard() {
                 color="success"
                 icon={<PaymentsIcon />}
                 title="Total Payments"
-                count="34k"
-                percentage={{
-                  color: "success",
-                  amount: "+1%",
-                  label: "than yesterday",
-                }}
+                count="$34k"
               />
             </MDBox>
           </Grid>
@@ -80,55 +84,46 @@ function Dashboard() {
                 color="primary"
                 icon={<PeopleAltIcon />}
                 title="Customers"
-                count="+91"
-                percentage={{
-                  color: "success",
-                  amount: "",
-                  label: "Just updated",
-                }}
+                count="7"
               />
             </MDBox>
           </Grid>
         </Grid>
         <MDBox mt={4.5}>
           <Grid container spacing={3}>
-            <Grid item xs={12} md={6} lg={4}>
+            <Grid item xs={12} md={6} lg={6}>
               <MDBox mb={3}>
                 <ReportsBarChart
                   color="dark"
                   title="Transactions"
-                  description="Weekly Update"
+                  description=""
                   date="campaign sent 2 days ago"
                   chart={reportsBarChartData}
                 />
               </MDBox>
             </Grid>
-            <Grid item xs={12} md={6} lg={4}>
+            <Grid item xs={12} md={6} lg={6}>
               <MDBox mb={3}>
                 <ReportsLineChart
-                  color="success"
-                  title="daily sales"
-                  description={
-                    <>
-                      (<strong>+15%</strong>) increase in today sales.
-                    </>
-                  }
+                  color="info"
+                  title="USSD Sessions"
+                  description=""
                   date="updated 4 min ago"
                   chart={sales}
                 />
               </MDBox>
             </Grid>
-            <Grid item xs={12} md={6} lg={4}>
+            {/* <Grid item xs={12} md={6} lg={4}>
               <MDBox mb={3}>
                 <ReportsLineChart
-                  color="info"
-                  title="completed tasks"
-                  description="Last Campaign Performance"
+                  color="success"
+                  title="Payment Requests"
+                  description=""
                   date="just updated"
                   chart={tasks}
                 />
               </MDBox>
-            </Grid>
+            </Grid> */}
           </Grid>
         </MDBox>
       </MDBox>
