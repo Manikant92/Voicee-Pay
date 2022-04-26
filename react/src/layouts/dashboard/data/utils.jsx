@@ -24,4 +24,16 @@ function GetTotalCustomers(setTotalCustomers) {
   }, [data]);
 }
 
-export { GetTotalPayments, GetTotalCustomers };
+function constructGraphData(dataList) {
+  let weekCountList = [0,0,0,0,0,0,0];
+
+  for (var transaction in dataList) {
+    
+    let transactionDate = new Date(dataList[transaction].createdAt);
+    weekCountList[transactionDate.getDay()] += 1;
+  }
+  console.log("Week days list - ", weekCountList);
+  return weekCountList;
+}
+
+export { GetTotalPayments, GetTotalCustomers, constructGraphData };
