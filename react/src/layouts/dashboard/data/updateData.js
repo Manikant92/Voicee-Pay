@@ -5,7 +5,6 @@ import { GET_TOTAL_USSD_SESSIONS } from "components/GraphQL";
 import { constructGraphData, GetTotalPayments } from "./utils";
 import { transactionTemplateData, ussdTemplateData } from "./templateChatData";
 
-
 function UpdateTransaction(
   setTotalTransaction,
   setTotalTransactionGraphData,
@@ -21,11 +20,11 @@ function UpdateTransaction(
       console.log("Total Transactions - ", data.transactions);
       setTotalTransaction(data.transactions.length);
       setTotalPayment(GetTotalPayments(data.transactions));
-      var tempTransactionTemplateData = transactionTemplateData;
-      tempTransactionTemplateData.datasets.data = constructGraphData(
-        data.transactions
+      var tempTransactionTemplateData = UpdateGraphData(
+        data.transactions,
+        setTotalTransactionGraphData,
+        false
       );
-      setTotalTransactionGraphData(tempTransactionTemplateData);
       console.log("Transaction Graph Data", tempTransactionTemplateData);
     }
   }, [data]);
@@ -46,23 +45,18 @@ function UpdateUssdSession(
       console.log("Total USSD Sessions - ", data.ussdSessions);
       setTotalUssdSessionList(data.ussdSessions);
       setTotalUssdSession(data.ussdSessions.length);
-      var tempUssdTemplateData = ussdTemplateData;
-      tempUssdTemplateData.datasets.data = constructGraphData(
-        data.ussdSessions
-      );
-      setTotalUssdSessionGraphData(tempUssdTemplateData);
+      UpdateGraphData(data.ussdSessions, setTotalUssdSessionGraphData, true);
     }
   }, [data]);
 }
 
-function UpdateGraphData(dataList, setDataList) {
+function UpdateGraphData(dataList, setDataList, ussd = true) {
+  var tempUssdTemplateData = ussd ? ussdTemplateData : transactionTemplateData;
   if (dataList) {
-    var tempUssdTemplateData = ussdTemplateData;
-    tempUssdTemplateData.datasets.data = constructGraphData(
-      dataList
-    );
+    tempUssdTemplateData.datasets.data = constructGraphData(dataList);
     setDataList(tempUssdTemplateData);
   }
+  return tempUssdTemplateData;
 }
 
 export { UpdateTransaction, UpdateUssdSession, UpdateGraphData };

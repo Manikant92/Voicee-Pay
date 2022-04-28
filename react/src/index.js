@@ -15,8 +15,10 @@ import {
 } from "@apollo/client";
 
 const httpLink = createHttpLink({
-  // uri: "https://sandy-voicee-pay-django.azurewebsites.net/api/q",
-  uri: "http://127.0.0.1:8000/api/q/",
+  uri:
+    process.env.NODE_ENV === "development"
+      ? "http://127.0.0.1:8000/api/q/"
+      : "https://sandy-voicee-pay-django.azurewebsites.net/api/q",
 });
 
 const client = new ApolloClient({

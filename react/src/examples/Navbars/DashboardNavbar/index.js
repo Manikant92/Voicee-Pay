@@ -22,6 +22,7 @@ import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import MenuIcon from "@mui/icons-material/Menu";
 import UpdateIcon from "@mui/icons-material/Update";
 import HomeIcon from "@mui/icons-material/Home";
+import ToggleButton from "@mui/material/ToggleButton";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -49,7 +50,7 @@ import {
 } from "context";
 import StandaloneToggleButton from "components/ToggleButton";
 
-function DashboardNavbar({ absolute, light, isMini }) {
+function DashboardNavbar({ absolute, light, isMini, autoRefreshStatusArray }) {
   const [navbarType, setNavbarType] = useState();
   const [controller, dispatch] = useMaterialUIController();
   const {
@@ -161,22 +162,36 @@ function DashboardNavbar({ absolute, light, isMini }) {
         </MDBox>
         {isMini ? null : (
           <MDBox sx={(theme) => navbarRow(theme, { isMini })}>
-            <Button
+            {/* <Button
               variant="contained"
-              color="success"
+              color={"success"}
               startIcon={<UpdateIcon />}
             >
               Update Data
-            </Button>
-            <IconButton>
-              <StandaloneToggleButton />
-            </IconButton>
+            </Button> */}
             <MDBox color={light ? "white" : "inherit"}>
-              <Link to="/authentication/sign-in/basic">
-                <IconButton sx={navbarIconButton} size="small" disableRipple>
-                  <AccountCircleIcon sx={iconsStyle} />
-                </IconButton>
-              </Link>
+              <ToggleButton
+                value="check"
+                selected={
+                  autoRefreshStatusArray
+                    ? autoRefreshStatusArray[0]
+                      ? true
+                      : false
+                    : false
+                }
+                color="success"
+                // onChange={() => {
+                //   setSelected(!selected);
+                // }}
+              >
+                <UpdateIcon fontSize="medium" />
+              </ToggleButton>
+            </MDBox>
+
+            <MDBox color={light ? "white" : "inherit"}>
+              <IconButton sx={navbarIconButton} size="small" disableRipple>
+                <AccountCircleIcon sx={iconsStyle} />
+              </IconButton>
               <IconButton
                 size="small"
                 disableRipple
@@ -228,6 +243,7 @@ DashboardNavbar.propTypes = {
   absolute: PropTypes.bool,
   light: PropTypes.bool,
   isMini: PropTypes.bool,
+  autoRefreshStatusArray: PropTypes.array,
 };
 
 export default DashboardNavbar;

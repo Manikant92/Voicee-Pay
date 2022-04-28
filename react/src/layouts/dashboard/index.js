@@ -13,32 +13,35 @@ import ReportsBarChart from "examples/Charts/BarCharts/ReportsBarChart";
 import ReportsLineChart from "examples/Charts/LineCharts/ReportsLineChart";
 import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
 
-// Data
-import {
-  transactionTemplateData,
-  ussdTemplateData,
-} from "layouts/dashboard/data/templateChatData";
-
 //icons
 import PaidIcon from "@mui/icons-material/Paid";
 import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
 import PaymentsIcon from "@mui/icons-material/Payments";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
-import { UpdateGraphData, UpdateTransaction, UpdateUssdSession } from "./data/updateData";
+import {
+  UpdateTransaction,
+  UpdateUssdSession,
+} from "./data/updateData";
 import { GetTotalCustomers } from "./data/utils";
 
 function Dashboard() {
   const [totalTransaction, setTotalTransaction] = useState(0);
-  const [totalTransactionGraphData, setTotalTransactionGraphData] = useState(
-    transactionTemplateData
-  );
+  const [totalTransactionGraphData, setTotalTransactionGraphData] = useState({
+    labels: ["M", "T", "W", "T", "F", "S", "S"],
+    datasets: {
+      label: "USSD Session",
+      data: [0, 2, 0, 0, 0, 0, 0],
+    },
+  });
   const [totalUssdSessions, setTotalUssdSession] = useState(0);
   const [totalUssdSessionsList, setTotalUssdSessionList] = useState(0);
-  const [totalUssdSessionGraphData, setTotalUssdSessionGraphData] =
-    useState(ussdTemplateData);
+  const [totalUssdSessionGraphData, setTotalUssdSessionGraphData] = useState({
+    labels: ["S", "M", "T", "W", "T", "F", "S"],
+    datasets: { label: "Transactions", data: [0, 3, 0, 0, 0, 0, 0] },
+  });
   const [totalPayment, setTotalPayment] = useState("$0");
   const [totalCustomers, setTotalCustomers] = useState(0);
-
+  const [autoRefreshState, setAutoRefreshState] = useState(false  );
   UpdateTransaction(
     setTotalTransaction,
     setTotalTransactionGraphData,
@@ -49,12 +52,14 @@ function Dashboard() {
     setTotalUssdSessionGraphData,
     setTotalUssdSessionList
   );
-  // UpdateGraphData(totalUssdSessionsList, setTotalUssdSessionGraphData);
+
   GetTotalCustomers(setTotalCustomers);
+
+
 
   return (
     <DashboardLayout>
-      <DashboardNavbar />
+      <DashboardNavbar autoRefreshState={[autoRefreshState, setAutoRefreshState] }/>
       <MDBox py={3}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={6} lg={3}>
