@@ -3,8 +3,8 @@ from django.contrib import admin
 from django.http import HttpResponse
 from django.urls import path, include
 from django.views.decorators.csrf import csrf_exempt
-from graph.views import PrivateGraphQLView
 from graph.schema import schema
+from graphene_django.views import GraphQLView
 
 urlpatterns = [
     path(
@@ -21,5 +21,6 @@ urlpatterns = [
         "ussd/",
         include(("ussd.urls", "ussd"), namespace="ussd"),
     ),
-    path("api/q/", csrf_exempt(PrivateGraphQLView.as_view(graphiql=False, schema=schema))),
+    path("api/q/", csrf_exempt(GraphQLView.as_view(schema=schema))),
+    path("api/q/explore/", GraphQLView.as_view(graphiql=True, schema=schema))
 ]
