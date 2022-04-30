@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // @mui material components
 import Grid from "@mui/material/Grid";
 
@@ -18,48 +18,59 @@ import PaidIcon from "@mui/icons-material/Paid";
 import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
 import PaymentsIcon from "@mui/icons-material/Payments";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
-import {
-  UpdateTransaction,
-  UpdateUssdSession,
-} from "./data/updateData";
+import { UpdateTransaction, UpdateUssdSession } from "./data/updateData";
 import { GetTotalCustomers } from "./data/utils";
 
+import { log } from "./data/utils";
 function Dashboard() {
   const [totalTransaction, setTotalTransaction] = useState(0);
   const [totalTransactionGraphData, setTotalTransactionGraphData] = useState({
-    labels: ["M", "T", "W", "T", "F", "S", "S"],
+    labels: ["S", "M", "T", "W", "T", "F", "S"],
     datasets: {
       label: "USSD Session",
-      data: [0, 2, 0, 0, 0, 0, 0],
+      data: [0, 0, 0, 0, 0, 0, 0],
     },
   });
   const [totalUssdSessions, setTotalUssdSession] = useState(0);
-  const [totalUssdSessionsList, setTotalUssdSessionList] = useState(0);
   const [totalUssdSessionGraphData, setTotalUssdSessionGraphData] = useState({
     labels: ["S", "M", "T", "W", "T", "F", "S"],
-    datasets: { label: "Transactions", data: [0, 3, 0, 0, 0, 0, 0] },
+    datasets: { label: "Transactions", data: [0, 0, 0, 0, 0, 0, 0] },
   });
   const [totalPayment, setTotalPayment] = useState("$0");
   const [totalCustomers, setTotalCustomers] = useState(0);
-  const [autoRefreshState, setAutoRefreshState] = useState(false  );
+  const [autoRefreshState, setAutoRefreshState] = useState(false);
+
+  const MINUTE_MS = 5000;
+
   UpdateTransaction(
     setTotalTransaction,
     setTotalTransactionGraphData,
-    setTotalPayment
+    setTotalPayment,
+    autoRefreshState
   );
   UpdateUssdSession(
     setTotalUssdSession,
     setTotalUssdSessionGraphData,
-    setTotalUssdSessionList
+    autoRefreshState
   );
 
   GetTotalCustomers(setTotalCustomers);
 
+  const UpdateGraphDataFromGraphQL = () => {
+    log("Refresh state - ", autoRefreshState);
+  };
 
+  useEffect(() => {
+    const interval = setInterval(UpdateGraphDataFromGraphQL, MINUTE_MS);
+
+    return () => clearInterval(interval);
+  }, [autoRefreshState]);
 
   return (
     <DashboardLayout>
-      <DashboardNavbar autoRefreshState={[autoRefreshState, setAutoRefreshState] }/>
+      <DashboardNavbar
+        autoRefreshStatusArray={[autoRefreshState, setAutoRefreshState]}
+      />
       <MDBox py={3}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={6} lg={3}>
@@ -75,6 +86,7 @@ function Dashboard() {
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
+                color="secondary"
                 icon={<PhoneIphoneIcon />}
                 title="USSD Session"
                 count={totalUssdSessions}

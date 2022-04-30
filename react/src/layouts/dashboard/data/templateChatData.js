@@ -1,5 +1,5 @@
 var ussdTemplateData = {
-  labels: ["M", "T", "W", "T", "F", "S", "S"],
+  labels: ["S", "M", "T", "W", "T", "F", "S"],
   datasets: {
     label: "USSD Session",
     data: [0, 2, 0, 0, 0, 0, 0],

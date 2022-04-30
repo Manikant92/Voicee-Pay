@@ -6,7 +6,7 @@ function GetTotalPayments(totalTransactionList) {
   for (var transaction in totalTransactionList) {
     totalPayment += parseFloat(totalTransactionList[transaction].amount);
   }
-  console.log("Total Payments - $", totalPayment);
+  // log("Total Payments - $", totalPayment);
   return "$" + totalPayment.toString();
 }
 
@@ -17,9 +17,9 @@ function GetTotalCustomers(setTotalCustomers) {
 
   useEffect(() => {
     if (data) {
-      console.log("Received customer details - setting the values");
+      log("Received customer details - setting the values");
       setTotalCustomers(data.customers.length);
-      console.log("Total customers - " + data.customers.length);
+      // log("Total customers - " + data.customers.length);
     }
   }, [data]);
 }
@@ -32,8 +32,12 @@ function constructGraphData(dataList) {
     let transactionDate = new Date(dataList[transaction].createdAt);
     weekCountList[transactionDate.getDay()] += 1;
   }
-  console.log("Week days list - ", weekCountList);
+  // log("Week days list - ", weekCountList);
   return weekCountList;
 }
 
-export { GetTotalPayments, GetTotalCustomers, constructGraphData };
+const log = (...args) =>
+  console.log(`[${new Date().toUTCString()}]`, " | Voicee Pay | ", ...args);
+
+
+export { GetTotalPayments, GetTotalCustomers, constructGraphData, log };

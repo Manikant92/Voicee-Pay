@@ -18,7 +18,7 @@ const httpLink = createHttpLink({
   uri:
     process.env.NODE_ENV === "development"
       ? "http://127.0.0.1:8000/api/q/"
-      : "https://sandy-voicee-pay-django.azurewebsites.net/api/q",
+      : "https://sandy-voicee-pay-django.azurewebsites.net/api/q/",
 });
 
 const client = new ApolloClient({
@@ -40,4 +40,4 @@ ReactDOM.render(
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals(console.log);
+// reportWebVitals(console.log);
