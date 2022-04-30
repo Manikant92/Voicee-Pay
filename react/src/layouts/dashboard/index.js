@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 // @mui material components
 import Grid from "@mui/material/Grid";
 
@@ -21,7 +21,6 @@ import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import { UpdateTransaction, UpdateUssdSession } from "./data/updateData";
 import { GetTotalCustomers } from "./data/utils";
 
-import { log } from "./data/utils";
 function Dashboard() {
   const [totalTransaction, setTotalTransaction] = useState(0);
   const [totalTransactionGraphData, setTotalTransactionGraphData] = useState({
@@ -40,8 +39,6 @@ function Dashboard() {
   const [totalCustomers, setTotalCustomers] = useState(0);
   const [autoRefreshState, setAutoRefreshState] = useState(false);
 
-  const MINUTE_MS = 5000;
-
   UpdateTransaction(
     setTotalTransaction,
     setTotalTransactionGraphData,
@@ -56,15 +53,15 @@ function Dashboard() {
 
   GetTotalCustomers(setTotalCustomers);
 
-  const UpdateGraphDataFromGraphQL = () => {
-    log("Refresh state - ", autoRefreshState);
-  };
+  // const UpdateGraphDataFromGraphQL = () => {
+  //   log("Refresh state - ", autoRefreshState);
+  // };
 
-  useEffect(() => {
-    const interval = setInterval(UpdateGraphDataFromGraphQL, MINUTE_MS);
+  // useEffect(() => {
+  //   const interval = setInterval(UpdateGraphDataFromGraphQL, MINUTE_MS);
 
-    return () => clearInterval(interval);
-  }, [autoRefreshState]);
+  //   return () => clearInterval(interval);
+  // }, [autoRefreshState]);
 
   return (
     <DashboardLayout>

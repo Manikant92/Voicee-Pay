@@ -12,12 +12,13 @@ from .models import (
 
 @admin.register(Customer)
 class CustomerAdmin(admin.ModelAdmin):
-    list_display = ("name", "email", "is_active", "account_number")
+    list_display = ("id", "name", "email", "is_active", "account_number")
 
 
 @admin.register(PaymentRequest)
 class PaymentRequestAdmin(admin.ModelAdmin):
     list_display = (
+        "id",
         "created_at",
         "receiver_name",
         "sender_name",
@@ -28,17 +29,18 @@ class PaymentRequestAdmin(admin.ModelAdmin):
 
 @admin.register(BankAccount)
 class BankAccountAdmin(admin.ModelAdmin):
-    list_display = ("account_number", "amount", "created_at")
+    list_display = ("id", "account_number", "amount", "created_at")
 
 
 @admin.register(BankBranch)
 class BankBranchAdmin(admin.ModelAdmin):
-    list_display = ("name", "ifse_code")
+    list_display = ("id", "name", "ifse_code")
 
 
 @admin.register(Transaction)
 class TransactionAdmin(admin.ModelAdmin):
     list_display = (
+        "id",
         "created_at",
         "transaction_id",
         "sender_account",
@@ -50,4 +52,4 @@ class TransactionAdmin(admin.ModelAdmin):
 
 @admin.register(Feedback)
 class FeedbackAdmin(admin.ModelAdmin):
-    list_display = ("created_at", "feedback")
+    list_display = ("id", "created_at", "feedback")

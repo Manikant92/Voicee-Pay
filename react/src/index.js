@@ -23,7 +23,29 @@ const httpLink = createHttpLink({
 
 const client = new ApolloClient({
   link: httpLink,
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    typePolicies: {
+      Query: {
+        fields: {
+          ussdSessions: {
+            merge(existing, incoming) {
+              return incoming;
+            },
+          },
+          transactions: {
+            merge(existing, incoming) {
+              return incoming;
+            },
+          },
+          customers: {
+            merge(existing, incoming) {
+              return incoming;
+            },
+          },
+        },
+      },
+    },
+  }),
 });
 
 ReactDOM.render(

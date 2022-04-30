@@ -14,13 +14,14 @@ class TransactionFields(DjangoObjectType):
             "receiver_account",
             "amount",
             "status",
+            "id"
         )
 
 
 class UssdSessionFields(DjangoObjectType):
     class Meta:
         model = UssdSession
-        fields = ("created_at", "session_id")
+        fields = ("created_at", "session_id","id")
 
 
 class CustomerFields(DjangoObjectType):
@@ -30,4 +31,5 @@ class CustomerFields(DjangoObjectType):
             "name",
             "email",
             "is_active",
+            "id"
         )

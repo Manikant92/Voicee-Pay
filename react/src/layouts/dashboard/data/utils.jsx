@@ -13,6 +13,7 @@ function GetTotalPayments(totalTransactionList) {
 function GetTotalCustomers(setTotalCustomers) {
   const { data } = useQuery(GET_TOTAL_CUSTOMERS, {
     fetchPolicy: "network-only",
+    pollInterval: 5000
   });
 
   useEffect(() => {

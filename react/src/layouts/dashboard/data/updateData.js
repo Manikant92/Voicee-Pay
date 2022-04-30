@@ -3,7 +3,8 @@ import { useQuery } from "@apollo/client";
 import { GET_TOTAL_TRANSACTIONS } from "components/GraphQL";
 import { GET_TOTAL_USSD_SESSIONS } from "components/GraphQL";
 import { constructGraphData, GetTotalPayments, log } from "./utils";
-import { transactionTemplateData, ussdTemplateData } from "./templateChatData";
+
+const MINUTE_MS = 5000;
 
 function UpdateTransaction(
   setTotalTransaction,
@@ -13,7 +14,7 @@ function UpdateTransaction(
 ) {
   const { data } = useQuery(GET_TOTAL_TRANSACTIONS, {
     fetchPolicy: "network-only",
-    pollInterval: 5000,
+    pollInterval: MINUTE_MS,
     skip: !dataFetchToggle,
   });
 
@@ -30,7 +31,7 @@ function UpdateTransaction(
         false
       );
       // log("Transaction Graph Data", tempTransactionTemplateData);
-      UpdateGraphData(data.transactions, setTotalTransactionGraphData, false);
+      // setTotalTransactionGraphData(tempTransactionTemplateData);
     }
 
   }, [data]);
@@ -43,7 +44,7 @@ function UpdateUssdSession(
 ) {
   const { data } = useQuery(GET_TOTAL_USSD_SESSIONS, {
     fetchPolicy: "network-only",
-    pollInterval: 5000,
+    pollInterval: MINUTE_MS,
     skip: !dataFetchToggle,
   });
 
@@ -53,13 +54,25 @@ function UpdateUssdSession(
       // log("Total USSD Sessions - ", data.ussdSessions);
       // setTotalUssdSessionList(data.ussdSessions);
       setTotalUssdSession(data.ussdSessions.length);
-      UpdateGraphData(data.ussdSessions, setTotalUssdSessionGraphData, true);
+      var tempUssdTemplateData = UpdateGraphData(data.ussdSessions, setTotalUssdSessionGraphData, true);
+      // setTotalUssdSessionGraphData(tempUssdTemplateData);
     }
   }, [data]);
 }
 
 function UpdateGraphData(dataList, setDataList, ussd = true) {
-  var tempUssdTemplateData = ussd ? ussdTemplateData : transactionTemplateData;
+  var tempUssdTemplateData = ussd
+    ? {
+        labels: ["S", "M", "T", "W", "T", "F", "S"],
+        datasets: {
+          label: "USSD Session",
+          data: [0, 2, 0, 0, 0, 0, 0],
+        },
+      }
+    : {
+        labels: ["S", "M", "T", "W", "T", "F", "S"],
+        datasets: { label: "Transactions", data: [0, 3, 0, 0, 0, 0, 0] },
+      };
   if (dataList) {
     tempUssdTemplateData.datasets.data = constructGraphData(dataList);
     setDataList(tempUssdTemplateData);
