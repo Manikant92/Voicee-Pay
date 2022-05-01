@@ -26,7 +26,6 @@ import ToggleButton from "@mui/material/ToggleButton";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
-import Button from "@mui/material/Button";
 
 // Material Dashboard 2 React example components
 import Breadcrumbs from "examples/Breadcrumbs";
@@ -48,7 +47,6 @@ import {
   setMiniSidenav,
   setOpenConfigurator,
 } from "context";
-import StandaloneToggleButton from "components/ToggleButton";
 
 function DashboardNavbar({ absolute, light, isMini, autoRefreshStatusArray }) {
   const [navbarType, setNavbarType] = useState();
@@ -62,7 +60,7 @@ function DashboardNavbar({ absolute, light, isMini, autoRefreshStatusArray }) {
   } = controller;
   const [openMenu, setOpenMenu] = useState(false);
   const route = useLocation().pathname.split("/").slice(1);
-
+  const [autoRefreshStateBtn, setAutoRefreshStateBtn] = useState(false);
   useEffect(() => {
     // Setting the navbar type
     if (fixedNavbar) {
@@ -97,6 +95,14 @@ function DashboardNavbar({ absolute, light, isMini, autoRefreshStatusArray }) {
     setOpenConfigurator(dispatch, !openConfigurator);
   const handleOpenMenu = (event) => setOpenMenu(event.currentTarget);
   const handleCloseMenu = () => setOpenMenu(false);
+
+  const updateAutoRefreshStatus = () => {
+    setAutoRefreshStateBtn(!autoRefreshStateBtn);
+    if (autoRefreshStatusArray) {
+      autoRefreshStatusArray[1](!autoRefreshStateBtn);
+      console.log(`updating Auto Refresh status ${!autoRefreshStateBtn}`);
+    }
+  };
 
   // Render the notifications menu
   const renderMenu = () => (
@@ -172,17 +178,9 @@ function DashboardNavbar({ absolute, light, isMini, autoRefreshStatusArray }) {
             <MDBox color={light ? "white" : "inherit"}>
               <ToggleButton
                 value="check"
-                selected={
-                  autoRefreshStatusArray
-                    ? autoRefreshStatusArray[0]
-                      ? true
-                      : false
-                    : false
-                }
+                selected={autoRefreshStateBtn}
                 color="success"
-                // onChange={() => {
-                //   setSelected(!selected);
-                // }}
+                onChange={updateAutoRefreshStatus}
               >
                 <UpdateIcon fontSize="medium" />
               </ToggleButton>
