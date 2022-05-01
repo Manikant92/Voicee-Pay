@@ -5,7 +5,10 @@ https://developers.africastalking.com/simulator
 
 -- actual website
 https://sandy-voicee-pay-django.azurewebsites.net
-webhook - https://sandy-voicee-pay-django.azurewebsites.net/ussd/webhook
+
+webhook - 
+https://sandy-voicee-pay-django.azurewebsites.net/ussd/webhook
+https://sandy-voicee-pay-django.azurewebsites.net/transaction/dialogflow_webhook
 
 
 -- DEBUGGING 

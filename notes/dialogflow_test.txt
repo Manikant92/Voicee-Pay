@@ -3,6 +3,11 @@
 +1 833-208-4225 - Hindi
 
 
+-- phrases to check
+How to block my citi card?
+mera sitee kaard kaise blok karen
+
+
 -- phrases to check dialog flow help bot
 help - this will trigger the general help that gives the list of things that it can do.
 Why was my cheque payment not credited to the card account?
