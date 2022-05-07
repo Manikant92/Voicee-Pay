@@ -15,6 +15,12 @@ Building the Best Digital Banking system for all
 - Azure Web Apps
 - Azure Container Registry
 
+## 📌 Points to remember
+- It takes some time to spin up both the React and Django containers if you're clicking the link for the `first time` or after a `long pause` so the the link might take around a minute to show both the **`React Dashboard and Django Admin Page`**
+- You need to create a bank account so that it can be linked to the customer (first create the bank account and then add it to the customer) - Just incase you want to create a new customer
+- Have the Django Admin Page up before calling the Google DialogFlow Phone Gateway number because if the Django container is not running the webhook from DialogFlow will not be captured
+- Reach out to `santhoshkdhana@gmail.com` for clarifications
+
 ### 🙌 Special thanks to all my friends from all over India for helping me with the language phrases
 - Shanmuganathan
 - Ivin Varghese
